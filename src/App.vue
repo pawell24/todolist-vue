@@ -1,15 +1,22 @@
 <template>
   <Form @submit-form="handleSumbitForm" />
   <ul>
-    <li v-for="task in tasks" :key="task.title">{{ task.title }}</li>
+    <ToDoItem
+      v-for="task in tasks"
+      :key="task.id"
+      :task="task"
+      @remove-task="handleRemoveTask"
+    />
   </ul>
 </template>
 
 <script>
 import Form from "./components/Form.vue";
+import ToDoItem from "./components/Todo.vue";
+
 export default {
   name: "App",
-  components: { Form },
+  components: { Form, ToDoItem },
   data: () => {
     return {
       tasks: [],
@@ -18,7 +25,9 @@ export default {
   methods: {
     handleSumbitForm(obj) {
       this.tasks.push(obj);
-      console.log(this.tasks);
+    },
+    handleRemoveTask(id) {
+      this.tasks = this.tasks.filter((task) => task.id != id);
     },
   },
 };
