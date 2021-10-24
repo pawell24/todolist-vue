@@ -1,13 +1,15 @@
 <template>
   <div>
-    <form @submit.prevent="">
+    <form @submit.prevent="submitForm">
       <div class="wrapper">
         <label>Title:<input type="text" v-model="title"/></label><br />
         <label>Description:<textarea v-model="description"/></label><br />
         <label>Date:<input type="date" v-model="date"/></label>
+        <button type="submit">Add</button>
       </div>
-    </form></div
-></template>
+    </form>
+  </div></template
+>
 
 <script>
 export default {
@@ -18,6 +20,18 @@ export default {
       description: "",
       date: "",
     };
+  },
+  methods: {
+    submitForm() {
+      this.$emit("submit-form", {
+        id: Math.floor((1 + Math.random()) * 0x10000)
+          .toString(16)
+          .substring(1),
+        title: this.title,
+        description: this.description,
+        date: this.date,
+      });
+    },
   },
 };
 </script>
